@@ -1,4 +1,4 @@
-# Rocket Academy Coding Bootcamp: Project 1: Frontend App
+# Rocket Academy Coding Bootcamp: Project 1: Frontend App - Boggle Game by Ameer
 
 https://bc.rocketacademy.co/1-frontend/1.p-frontend-app
 
@@ -13,3 +13,5 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
+
+## User Stories
