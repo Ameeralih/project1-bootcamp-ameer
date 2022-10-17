@@ -49,3 +49,10 @@
   user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
 }
+
+.correctWords {
+  background: rgb(224, 235, 255);
+  flex-direction: column;
+  align-items: left;
+  justify-content: left;
+}
