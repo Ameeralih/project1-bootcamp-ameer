@@ -9,7 +9,6 @@ class App extends React.Component {
       board: this.generateBoard(),
       guess: "",
       dictionary: require("an-array-of-english-words"),
-      wordInOrNotMessage: "",
       wordsGuessed: [],
       correctWordsGuessed: [],
       score: 0,
@@ -23,34 +22,68 @@ class App extends React.Component {
   }
 
   tick() {
-    this.setState({
-      secondsToGameEnd: this.state.secondsToGameEnd - 1,
-    });
+    if (this.state.secondsToGameEnd === 0) {
+      clearInterval(this.timerID);
+    }
+    if (this.state.secondsToGameEnd > 0) {
+      this.setState({
+        secondsToGameEnd: this.state.secondsToGameEnd - 1,
+      });
+    }
   }
-  generateLetter() {
-    const characters = "abcdefghijklmnopqrstuvwxyz";
-    let result = "";
-    const charactersLength = characters.length;
-    result = characters.charAt(Math.floor(Math.random() * charactersLength));
-    return result;
+  // generateLetter() {
+  //   const characters = "abcdefghijklmnopqrstuvwxyz";
+  //   let result = "";
+  //   const charactersLength = characters.length;
+  //   result = characters.charAt(Math.floor(Math.random() * charactersLength));
+  //   return result;
+  // }
+
+  generateRandomDieAndSide(dieCombination) {
+    const diceLeft = dieCombination.length;
+    let dieChosen = Math.floor(Math.random() * diceLeft);
+    let sideChosen = Math.floor(Math.random() * 6);
+    let letter = dieCombination[dieChosen][sideChosen];
+    console.log(dieCombination[dieChosen]);
+    dieCombination.splice(dieChosen, 1);
+    return letter;
   }
+
   generateBoard() {
+    let dieCombination = [
+      ["A", "A", "E", "E", "G", "N"],
+      ["E", "L", "R", "T", "T", "Y"],
+      ["A", "O", "O", "T", "T", "W"],
+      ["A", "B", "B", "J", "O", "O"],
+      ["E", "H", "R", "T", "V", "W"],
+      ["C", "I", "M", "O", "T", "U"],
+      ["D", "I", "S", "T", "T", "Y"],
+      ["E", "I", "O", "S", "S", "T"],
+      ["D", "E", "L", "R", "V", "Y"],
+      ["A", "C", "H", "O", "P", "S"],
+      ["H", "I", "M", "N", "Q", "U"],
+      ["E", "E", "I", "N", "S", "U"],
+      ["E", "E", "G", "H", "N", "W"],
+      ["A", "F", "F", "K", "P", "S"],
+      ["H", "L", "N", "N", "R", "Z"],
+      ["D", "E", "I", "L", "R", "X"],
+    ];
     const row1 = [];
     const row2 = [];
     const row3 = [];
     const row4 = [];
-
+    console.log(dieCombination);
     for (let i = 0; i < 4; i++) {
-      row1.push(this.generateLetter());
+      row1.push(this.generateRandomDieAndSide(dieCombination));
     }
     for (let i = 0; i < 4; i++) {
-      row2.push(this.generateLetter());
+      row2.push(this.generateRandomDieAndSide(dieCombination));
     }
     for (let i = 0; i < 4; i++) {
-      row3.push(this.generateLetter());
+      row3.push(this.generateRandomDieAndSide(dieCombination));
     }
     for (let i = 0; i < 4; i++) {
-      row4.push(this.generateLetter());
+      row4.push(this.generateRandomDieAndSide(dieCombination));
     }
     const board = [row1, row2, row3, row4];
     return board;
@@ -110,7 +143,6 @@ class App extends React.Component {
 
   board() {
     const boardArray = this.state.board;
-
     return (
       <div>
         <div>
@@ -144,25 +176,18 @@ class App extends React.Component {
   handleSubmit(e) {
     const dictionary = this.state.dictionary;
     e.preventDefault();
-    console.log(this.state.guess);
-    console.log(dictionary.includes(this.state.guess));
-    console.log(this.checkWord(this.state.board, this.state.guess));
     if (
-      dictionary.includes(this.state.guess) &&
-      this.checkWord(this.state.board, this.state.guess)
+      dictionary.includes(this.state.guess.toLowerCase()) &&
+      this.checkWord(this.state.board, this.state.guess.toUpperCase()) &&
+      !this.state.correctWordsGuessed.includes(this.state.guess.toUpperCase())
     ) {
-      console.log("yes");
       this.setState({
-        wordInOrNotMessage: "Yes!",
         correctWordsGuessed: [
           ...this.state.correctWordsGuessed,
-          this.state.guess,
+          this.state.guess.toUpperCase(),
         ],
-      });
-    } else {
-      console.log("no");
-      this.setState({
-        wordInOrNotMessage: "No!",
+        score: this.state.score + this.state.guess.length,
+        guess: "",
       });
     }
   }
@@ -173,28 +198,55 @@ class App extends React.Component {
     });
   }
 
+  form() {
+    if (this.state.secondsToGameEnd > 0) {
+      return (
+        <form onSubmit={(e) => this.handleSubmit(e)}>
+          <input
+            type="text"
+            name="guess"
+            value={this.state.guess}
+            onChange={(e) => this.handleChange(e)}
+          />
+          <button>Enter</button>
+        </form>
+      );
+    } else {
+      return <p>Time's Up!</p>;
+    }
+  }
+
+  correctWordsGuessed() {
+    let wordsGuessedString = "";
+
+    if (this.state.correctWordsGuessed.length === 1) {
+      return this.state.correctWordsGuessed[0];
+    }
+    if (this.state.correctWordsGuessed.length > 1) {
+      let i = 0;
+      for (i = 0; i < this.state.correctWordsGuessed.length - 1; i++) {
+        wordsGuessedString =
+          wordsGuessedString + this.state.correctWordsGuessed[i] + ", ";
+      }
+      wordsGuessedString =
+        wordsGuessedString + this.state.correctWordsGuessed[i];
+      return wordsGuessedString;
+    }
+  }
+
   render() {
     return (
-      <div>
-        <div className="board">
-          {this.board()}
-          <form onSubmit={(e) => this.handleSubmit(e)}>
-            <input
-              type="text"
-              name="guess"
-              value={this.state.guess}
-              onChange={(e) => this.handleChange(e)}
-            />
-            <button>Enter</button>
-          </form>
+      <div className="outerContainer">
+        <div>Boggle</div>
+        <div className="board">{this.board()}</div>
+        <div className="form">{this.form()}</div>
+        <div className="time">
+          <b>Time Left:</b> {this.state.secondsToGameEnd} seconds
         </div>
-        <p>Time Left: {this.state.secondsToGameEnd} seconds</p>
-        <div className="correctWords">
-          <p>
-            <b>Correct Words</b>
-          </p>
 
-          <p>{this.state.correctWordsGuessed}</p>
+        <div>
+          <b>Score: </b>
+          {this.state.score}
         </div>
       </div>
     );
@@ -203,11 +255,6 @@ class App extends React.Component {
 
 export class Game extends React.Component {
   render() {
-    return (
-      <div className="App-header">
-        <p>Boggle Board</p>
-        <App />
-      </div>
-    );
+    return <App />;
   }
 }
