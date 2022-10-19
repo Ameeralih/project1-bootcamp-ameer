@@ -1,6 +1,8 @@
 import React from "react";
 import "./App.css";
 import words from "an-array-of-english-words";
+import Keyboard from "react-simple-keyboard";
+import "react-simple-keyboard/build/css/index.css";
 
 class App extends React.Component {
   constructor(props) {
@@ -177,36 +179,81 @@ class App extends React.Component {
     const dictionary = this.state.dictionary;
     e.preventDefault();
     if (
-      dictionary.includes(this.state.guess.toLowerCase()) &&
-      this.checkWord(this.state.board, this.state.guess.toUpperCase()) &&
-      !this.state.correctWordsGuessed.includes(this.state.guess.toUpperCase())
+      dictionary.includes(this.state.input.toLowerCase()) &&
+      this.checkWord(this.state.board, this.state.input.toUpperCase()) &&
+      !this.state.correctWordsGuessed.includes(this.state.input.toUpperCase())
     ) {
       this.setState({
         correctWordsGuessed: [
           ...this.state.correctWordsGuessed,
-          this.state.guess.toUpperCase(),
+          this.state.input.toUpperCase(),
         ],
-        score: this.state.score + this.state.guess.length,
-        guess: "",
+        score: this.state.score + this.state.input.length,
+        input: "",
       });
     }
   }
 
   handleChange(e) {
     this.setState({
-      guess: e.target.value,
+      input: e.target.value,
     });
   }
 
+  onChange = (input) => {
+    this.setState({ input });
+  };
+
+  handleKeyboardSubmit() {
+    const dictionary = this.state.dictionary;
+    if (
+      dictionary.includes(this.state.input.toLowerCase()) &&
+      this.checkWord(this.state.board, this.state.input.toUpperCase()) &&
+      !this.state.correctWordsGuessed.includes(this.state.input.toUpperCase())
+    ) {
+      this.setState({
+        correctWordsGuessed: [
+          ...this.state.correctWordsGuessed,
+          this.state.input.toUpperCase(),
+        ],
+        score: this.state.score + this.state.input.length,
+        input: "",
+      });
+    }
+  }
+
+  onKeyPress = (button) => {
+    /**
+     * If you want to handle the shift and caps lock buttons
+     */
+    if (button === "{enter}") this.handleKeyboardSubmit();
+  };
+
   form() {
+    const layout = {
+      default: [
+        "q w e r t y u i o p {backspace}",
+        "a s d f g h j k l {enter}",
+        "z x c v b n m",
+        "{space}",
+      ],
+    };
     if (this.state.secondsToGameEnd > 0) {
       return (
         <form onSubmit={(e) => this.handleSubmit(e)}>
           <input
+            className="inputField"
             type="text"
             name="guess"
-            value={this.state.guess}
+            value={this.state.input}
             onChange={(e) => this.handleChange(e)}
+          />
+          <Keyboard
+            layoutName="default"
+            layout={layout}
+            keyboardRef={(r) => (this.keyboard = r)}
+            onChange={this.onChange}
+            onKeyPress={this.onKeyPress}
           />
           <button>Enter</button>
         </form>
@@ -235,21 +282,30 @@ class App extends React.Component {
   }
 
   render() {
-    return (
-      <div className="outerContainer">
-        <div>Boggle</div>
-        <div className="board">{this.board()}</div>
-        <div className="form">{this.form()}</div>
-        <div className="time">
-          <b>Time Left:</b> {this.state.secondsToGameEnd} seconds
-        </div>
+    if (this.state.secondsToGameEnd > 0) {
+      return (
+        <div className="outerContainer">
+          <div>Boggle</div>
+          <div className="time">
+            <b>Time Left:</b> {this.state.secondsToGameEnd} seconds
+          </div>
 
-        <div>
-          <b>Score: </b>
-          {this.state.score}
+          <div>
+            <b>Score: </b>
+            {this.state.score}
+          </div>
+          <div className="board">{this.board()}</div>
+          <div className="form">{this.form()}</div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div className="outerContainer">
+          <div> Score: {this.state.score}</div>
+          <button>Play Again!</button>
+        </div>
+      );
+    }
   }
 }
 

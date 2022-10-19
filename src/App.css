@@ -1,9 +1,10 @@
 .outerContainer {
+  margin-top: 30px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 80vh;
 }
 
 .board {
@@ -33,9 +34,12 @@
                                   supported by Chrome, Edge, Opera and Firefox */
 }
 
-.form {
-  float: left;
+.inputField {
+  display: block;
+  margin: auto;
 }
-.correctWords {
-  float: right;
+
+.simple-keyboard {
+  max-width: 850px;
+  margin-top: 30px;
 }

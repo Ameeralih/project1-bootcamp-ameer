@@ -9,7 +9,8 @@
     "random-words": "^1.2.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
-    "react-scripts": "5.0.1"
+    "react-scripts": "5.0.1",
+    "react-simple-keyboard": "^3.4.226"
   },
   "scripts": {
     "predeploy": "npm run build",
