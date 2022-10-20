@@ -19,9 +19,9 @@ class App extends React.Component {
     };
   }
 
-  // componentDidMount() {
-  //   this.timerID = setInterval(() => this.tick(), 1000);
-  // }
+  componentDidMount() {
+    this.timerID = setInterval(() => this.tick(), 1000);
+  }
 
   tick() {
     if (this.state.secondsToGameEnd === 0) {
