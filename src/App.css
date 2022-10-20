@@ -37,9 +37,26 @@
 .inputField {
   display: block;
   margin: auto;
+  margin-top: 10px;
 }
 
 .simple-keyboard {
+  left: 0;
+  right: 0;
+  margin: auto;
+  bottom: 1px;
+  position: fixed;
   max-width: 850px;
-  margin-top: 30px;
+}
+
+@media screen and (min-width: 500px) {
+  .simple-keyboard {
+    visibility: hidden;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .enter-button {
+    visibility: hidden;
+  }
 }

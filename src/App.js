@@ -19,9 +19,9 @@ class App extends React.Component {
     };
   }
 
-  componentDidMount() {
-    this.timerID = setInterval(() => this.tick(), 1000);
-  }
+  // componentDidMount() {
+  //   this.timerID = setInterval(() => this.tick(), 1000);
+  // }
 
   tick() {
     if (this.state.secondsToGameEnd === 0) {
@@ -219,6 +219,7 @@ class App extends React.Component {
         score: this.state.score + this.state.input.length,
         input: "",
       });
+      this.keyboard.clearInput();
     }
   }
 
@@ -232,16 +233,16 @@ class App extends React.Component {
   form() {
     const layout = {
       default: [
-        "q w e r t y u i o p {backspace}",
-        "a s d f g h j k l {enter}",
-        "z x c v b n m",
-        "{space}",
+        "q w e r t y u i o p",
+        "a s d f g h j k l",
+        "{enter} z x c v b n m {backspace}",
       ],
     };
     if (this.state.secondsToGameEnd > 0) {
       return (
         <form onSubmit={(e) => this.handleSubmit(e)}>
           <input
+            autoFocus="autofocus"
             className="inputField"
             type="text"
             name="guess"
@@ -255,7 +256,7 @@ class App extends React.Component {
             onChange={this.onChange}
             onKeyPress={this.onKeyPress}
           />
-          <button>Enter</button>
+          <button className="enter-button">Enter</button>
         </form>
       );
     } else {
