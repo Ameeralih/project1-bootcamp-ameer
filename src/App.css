@@ -7,6 +7,40 @@
   height: 80vh;
 }
 
+.time {
+  float: left;
+  margin-right: 60px;
+  font-size: 20px;
+  border: 1px solid;
+  border-radius: 16px;
+  padding: 8px;
+}
+
+.score {
+  display: block;
+  float: right;
+  font-size: 20px;
+  border: 1px solid;
+  border-radius: 16px;
+  padding: 8px;
+}
+
+.score-points {
+  margin-left: 20px;
+}
+
+.time-seconds {
+  display: block;
+  margin-left: 25px;
+}
+
+.game-title {
+  font-size: 45px;
+  position: fixed;
+  margin-bottom: 610px;
+  font-family: "Rubik", sans-serif;
+}
+
 .board {
   padding: 0px;
   margin: 25px 10px;
@@ -38,6 +72,10 @@
   display: block;
   margin: auto;
   margin-top: 10px;
+  border-radius: 5px;
+  height: 30px;
+  font-size: 25px;
+  width: 150px;
 }
 
 .simple-keyboard {
@@ -49,10 +87,34 @@
   max-width: 850px;
 }
 
+.hg-button {
+  height: 47px !important;
+  margin: auto;
+}
+
+.hg-row {
+  margin: auto;
+  height: 48px;
+}
+
 @media screen and (min-width: 500px) {
   .simple-keyboard {
     visibility: hidden;
   }
+}
+
+.enter-button {
+  border-radius: 8px;
+  display: block;
+  height: 30px;
+  width: 60px;
+  margin: auto;
+  margin-top: 3px;
+  background-color: #4caf50; /* Green */
+  color: white;
+  background-color: #4caf50; /* Green */
+  color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 @media screen and (max-width: 500px) {

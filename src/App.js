@@ -17,6 +17,7 @@ class App extends React.Component {
       gameStart: false,
       secondsToGameEnd: 180,
     };
+    this.restart = this.restart.bind(this);
   }
 
   componentDidMount() {
@@ -282,19 +283,34 @@ class App extends React.Component {
     }
   }
 
+  restart() {
+    this.keyboard.clearInput();
+    this.setState({
+      secondsToGameEnd: 180,
+      score: 0,
+      input: "",
+    });
+  }
   render() {
     if (this.state.secondsToGameEnd > 0) {
       return (
         <div className="outerContainer">
-          <div>Boggle</div>
-          <div className="time">
-            <b>Time Left:</b> {this.state.secondsToGameEnd} seconds
+          <div className="game-title">Word Search!</div>
+          <div className="time-and-score">
+            <div className="time">
+              <div className="time-header">
+                <b>Time Left</b>
+              </div>
+              <div className="time-seconds">{this.state.secondsToGameEnd}</div>
+            </div>
+            <div className="score">
+              <div className="score-header">
+                <b>Score</b>
+              </div>
+              <div className="score-points">{this.state.score}</div>
+            </div>
           </div>
 
-          <div>
-            <b>Score: </b>
-            {this.state.score}
-          </div>
           <div className="board">{this.board()}</div>
           <div className="form">{this.form()}</div>
         </div>
@@ -303,7 +319,7 @@ class App extends React.Component {
       return (
         <div className="outerContainer">
           <div> Score: {this.state.score}</div>
-          <button>Play Again!</button>
+          <button onClick={this.restart}>Play Again!</button>
         </div>
       );
     }
