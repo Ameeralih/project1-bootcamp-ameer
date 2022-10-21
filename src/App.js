@@ -15,7 +15,7 @@ class App extends React.Component {
       correctWordsGuessed: [],
       score: 0,
       gameStart: false,
-      secondsToGameEnd: 180,
+      secondsToGameEnd: 5,
     };
     this.restart = this.restart.bind(this);
   }
@@ -283,7 +283,8 @@ class App extends React.Component {
     }
   }
 
-  restart() {
+  restart(e) {
+    e.preventDefault();
     this.keyboard.clearInput();
     this.setState({
       secondsToGameEnd: 180,
