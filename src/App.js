@@ -285,6 +285,7 @@ class App extends React.Component {
 
   restart(e) {
     e.preventDefault();
+    this.componentDidMount();
     this.keyboard.clearInput();
     this.setState({
       secondsToGameEnd: 180,
