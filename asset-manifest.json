@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/project1-bootcamp-ameer/static/css/main.1a41e4f4.css",
-    "main.js": "/project1-bootcamp-ameer/static/js/main.28a45735.js",
+    "main.css": "/project1-bootcamp-ameer/static/css/main.8b455d83.css",
+    "main.js": "/project1-bootcamp-ameer/static/js/main.1735b6e6.js",
     "index.html": "/project1-bootcamp-ameer/index.html",
-    "main.1a41e4f4.css.map": "/project1-bootcamp-ameer/static/css/main.1a41e4f4.css.map",
-    "main.28a45735.js.map": "/project1-bootcamp-ameer/static/js/main.28a45735.js.map"
+    "main.8b455d83.css.map": "/project1-bootcamp-ameer/static/css/main.8b455d83.css.map",
+    "main.1735b6e6.js.map": "/project1-bootcamp-ameer/static/js/main.1735b6e6.js.map"
   },
   "entrypoints": [
-    "static/css/main.1a41e4f4.css",
-    "static/js/main.28a45735.js"
+    "static/css/main.8b455d83.css",
+    "static/js/main.1735b6e6.js"
   ]
 }
