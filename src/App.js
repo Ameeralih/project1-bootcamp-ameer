@@ -244,7 +244,6 @@ class App extends React.Component {
       return (
         <form onSubmit={(e) => this.handleSubmit(e)}>
           <input
-            autoFocus="autofocus"
             className="inputField"
             type="text"
             name="guess"
