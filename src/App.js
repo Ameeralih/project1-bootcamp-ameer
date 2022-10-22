@@ -18,6 +18,7 @@ class App extends React.Component {
       secondsToGameEnd: 180,
     };
     this.restart = this.restart.bind(this);
+    this.startGame = this.startGame.bind(this);
   }
 
   componentDidMount() {
@@ -293,37 +294,58 @@ class App extends React.Component {
       input: "",
     });
   }
-  render() {
-    if (this.state.secondsToGameEnd > 0) {
-      return (
-        <div className="outerContainer">
-          <div className="game-title">Word Search!</div>
-          <div className="time-and-score">
-            <div className="time">
-              <div className="time-header">
-                <b>Time Left</b>
-              </div>
-              <div className="time-seconds">{this.state.secondsToGameEnd}</div>
-            </div>
-            <div className="score">
-              <div className="score-header">
-                <b>Score</b>
-              </div>
-              <div className="score-points">{this.state.score}</div>
-            </div>
-          </div>
 
-          <div className="board">{this.board()}</div>
-          <div className="form">{this.form()}</div>
-        </div>
-      );
-    } else {
+  startGame() {
+    this.setState({
+      gameStart: true,
+      secondsToGameEnd: 180,
+    });
+  }
+  render() {
+    console.log(this.state.gameStart);
+    if (this.state.gameStart === false) {
       return (
         <div className="outerContainer">
-          <div> Score: {this.state.score}</div>
-          <button onClick={this.restart}>Play Again!</button>
+          <div>
+            <button onClick={this.startGame}>Start Game!</button>
+          </div>
         </div>
       );
+    }
+    if (this.state.gameStart === true) {
+      if (this.state.secondsToGameEnd > 0) {
+        return (
+          <div className="outerContainer">
+            <div className="game-title">Word Search!</div>
+            <div className="time-and-score">
+              <div className="time">
+                <div className="time-header">
+                  <b>Time Left</b>
+                </div>
+                <div className="time-seconds">
+                  {this.state.secondsToGameEnd}
+                </div>
+              </div>
+              <div className="score">
+                <div className="score-header">
+                  <b>Score</b>
+                </div>
+                <div className="score-points">{this.state.score}</div>
+              </div>
+            </div>
+
+            <div className="board">{this.board()}</div>
+            <div className="form">{this.form()}</div>
+          </div>
+        );
+      } else {
+        return (
+          <div className="outerContainer">
+            <div> Score: {this.state.score}</div>
+            <button onClick={this.restart}>Play Again!</button>
+          </div>
+        );
+      }
     }
   }
 }
